@@ -1,0 +1,36 @@
+service: ps5-stock-checker
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'sns:Publish'
+      Resource: !Ref PS5StockTopic
+
+functions:
+  check:
+    handler: src/stock.check
+    memorySize: 1600
+    timeout: 30
+    environment:
+      topic: !Ref PS5StockTopic
+      checkUrl: https://www.bestbuy.com/site/sony-playstation-5-console/6426149.p?skuId=6426149
+    events:
+      - schedule: rate(5 minutes)
+
+resources:
+  Resources:
+    PS5StockTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: PS5 Stock Topic
+        TopicName: PS5_Stock_Topic
+    PS5StockTopicSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        TopicArn: !Ref PS5StockTopic
+        Protocol: sms
+        Endpoint: 15555555
