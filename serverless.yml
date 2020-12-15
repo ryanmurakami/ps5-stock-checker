@@ -4,6 +4,7 @@ frameworkVersion: '2'
 provider:
   name: aws
   runtime: nodejs12.x
+  region: us-west-2
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -18,6 +19,7 @@ functions:
     environment:
       topic: !Ref PS5StockTopic
       checkUrl: https://www.bestbuy.com/site/sony-playstation-5-console/6426149.p?skuId=6426149
+      sku: 6426149
     events:
       - schedule: rate(5 minutes)
 

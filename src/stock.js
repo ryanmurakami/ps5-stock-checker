@@ -29,9 +29,10 @@ module.exports.check = async event => {
 }
 
 async function checkStock (page) {
-  const el = await page.$('.add-to-cart-button')
+  const el = await page.$(`*[data-sku-id="${process.env.sku}"]`)
   const buttonText = await (await el.getProperty('textContent')).jsonValue()
-  return buttonText !== 'Sold Out'
+
+  return !['Sold Out', 'Coming Soon'].includes(buttonText)
 }
 
 async function sendNotification (url) {
