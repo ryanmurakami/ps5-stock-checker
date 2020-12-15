@@ -1,6 +1,6 @@
 # AWS Lambda-based PS5 Stock Checking with Puppeteer and SNS
 
-[![Surfing the Web with Lambda Video](https://img.youtube.com/vi/fYsnd1mVLEE/0.jpg)](https://www.youtube.com/watch?v=fYsnd1mVLEE)
+[![Check PS5 Stock with AWS](https://img.youtube.com/vi/abt6yEca1kQ/0.jpg)](https://www.youtube.com/watch?v=abt6yEca1kQ)
 
 ## How to Run
 
