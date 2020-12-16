@@ -20,7 +20,7 @@ module.exports.check = async event => {
     console.log(new Date().toISOString())
     console.log(statusMsg)
     if (status) {
-      await sendNotification(process.env.checkUrl)
+      await sendNotification(process.env.checkUrl, status)
       console.log('Notification sent! Hope you beat the bots!')
     }
   } catch (err) {
@@ -32,12 +32,12 @@ async function checkStock (page) {
   const el = await page.$(`*[data-sku-id="${process.env.sku}"]`)
   const buttonText = await (await el.getProperty('textContent')).jsonValue()
 
-  return !['Sold Out', 'Coming Soon'].includes(buttonText)
+  return !['Sold Out', 'Coming Soon', 'Check Stores'].includes(buttonText) ? buttonText : false
 }
 
-async function sendNotification (url) {
+async function sendNotification (url, state) {
   const params = {
-    Message: `PS5 is in stock at Best Buy! Go get it! ${url}`,
+    Message: `PS5 is ${state} at Best Buy! Go get it! ${url}`,
     TopicArn: process.env.topic
   }
 
