@@ -31,8 +31,9 @@ module.exports.check = async event => {
 async function checkStock (page) {
   const el = await page.$(`*[data-sku-id="${process.env.sku}"]`)
   const buttonText = await (await el.getProperty('textContent')).jsonValue()
+  const ngOutcomes = ['Sold Out', 'Coming Soon', 'Check Stores', 'Unavailable', 'Unavailable Nearby', 'Find a Store']
 
-  return !['Sold Out', 'Coming Soon', 'Check Stores'].includes(buttonText) ? buttonText : false
+  return !ngOutcomes.includes(buttonText) ? buttonText : false
 }
 
 async function sendNotification (url, state) {
